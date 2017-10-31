@@ -156,6 +156,14 @@ std::vector<chain::Message> native_contract_chain_initializer::prepare_database(
    });
    boost::copy(genesis.initial_producers | CreateProducer, std::back_inserter(messages_to_process));
 
+   // Create claimable snapshot balances
+   for (const auto& bal : genesis.initial_balances) {
+      db.create<native::eos::SnapshotObject>([this, &bal]( auto& s) {
+         s.ethAddress = bal.eth_address;
+         s.balance = bal.balance;
+      });
+   }
+
    // Create special accounts
    auto create_special_account = [this, &db](Name name, const auto& owner, const auto& active) {
       db.create<account_object>([this, &name](account_object& a) {

@@ -8,4 +8,5 @@
 
 #include <eos/native_contract/staked_balance_objects.hpp>
 #include <eos/native_contract/balance_object.hpp>
+#include <eos/native_contract/snapshot_object.hpp>
 #include <eos/native_contract/producer_objects.hpp>

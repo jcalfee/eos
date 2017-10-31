@@ -94,6 +94,9 @@ struct claim
    account   AccountName
    amount    ShareType
 
+struct claimerc
+   account   AccountName # new or existing account
+
 struct newaccount
    creator   AccountName
    name      AccountName

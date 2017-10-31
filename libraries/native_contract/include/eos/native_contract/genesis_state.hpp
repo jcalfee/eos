@@ -47,6 +47,15 @@ struct genesis_state_type {
       string owner_name;
       PublicKey block_signing_key;
    };
+   struct initial_balance_type {
+      initial_balance_type(const string& eos_claim_address = string(),
+                           uint64_t bal = 0)
+        : eth_address(eos_claim_address),
+          balance(bal)
+      {}
+      string eth_address;
+      Asset balance;
+   };
 
    Time                                     initial_timestamp;
    BlockchainConfiguration                  initial_configuration = {
@@ -65,6 +74,7 @@ struct genesis_state_type {
    };
    vector<initial_account_type>             initial_accounts;
    vector<initial_producer_type>            initial_producers;
+   vector<initial_balance_type>             initial_balances;
 
    /**
     * Temporary, will be moved elsewhere.
@@ -86,6 +96,8 @@ FC_REFLECT(eos::native_contract::genesis_state_type::initial_account_type,
 
 FC_REFLECT(eos::native_contract::genesis_state_type::initial_producer_type, (owner_name)(block_signing_key))
 
+FC_REFLECT(eos::native_contract::genesis_state_type::initial_balance_type, (eth_address)(balance))
+
 FC_REFLECT(eos::native_contract::genesis_state_type,
            (initial_timestamp)(initial_configuration)(initial_accounts)
-           (initial_producers)(initial_chain_id))
+           (initial_producers)(initial_balances)(initial_chain_id))

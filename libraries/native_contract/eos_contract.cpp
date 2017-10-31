@@ -243,6 +243,11 @@ void apply_eos_claim(apply_context& context) {
    });
 }
 
+void apply_eos_claimerc(apply_context& context) {
+  auto claimerc = context.msg.as<types::claimerc>();
+
+  wdump((claimerc.account)(claimerc));
+}
 
 void apply_eos_setproducer(apply_context& context) {
    auto update = context.msg.as<types::setproducer>();
