@@ -35,10 +35,15 @@ struct KeyPermissionWeight
    key    PublicKey
    weight UInt16
 
+struct EthAddressPermissionWeight
+   ethAddress EthAddress # Ethereum Address (Erc20 token sale balances)
+   weight     UInt16
+
 struct Authority
-   threshold UInt32
-   keys      KeyPermissionWeight[]
-   accounts  AccountPermissionWeight[]
+   threshold    UInt32
+   keys         KeyPermissionWeight[]
+   accounts     AccountPermissionWeight[]
+   ethAddresses EthAddressPermissionWeight[]
 
 struct BlockchainConfiguration
    maxBlockSize       UInt32

@@ -1090,7 +1090,7 @@ void chain_controller::update_global_properties(const signed_block& b) {
          gpo.configuration = std::move(config);
       });
 
-      auto active_producers_authority = types::Authority(config::ProducersAuthorityThreshold, {}, {});
+      auto active_producers_authority = types::Authority(config::ProducersAuthorityThreshold, {}, {}, {});
       for(auto& name : gpo.active_producers) {
          active_producers_authority.accounts.push_back({{name, config::ActiveName}, 1});
       }

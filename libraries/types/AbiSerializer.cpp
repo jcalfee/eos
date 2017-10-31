@@ -46,6 +46,7 @@ namespace eos { namespace types {
    void AbiSerializer::configureBuiltInTypes() {
       //PublicKey.hpp
       built_in_types.emplace("PublicKey",     packUnpack<PublicKey>());
+      // built_in_types.emplace("EthAddress",    packUnpack<EthAddress>());
 
       //Asset.hpp
       built_in_types.emplace("Asset",         packUnpack<Asset>());
@@ -80,23 +81,24 @@ namespace eos { namespace types {
       built_in_types.emplace("Fields",        packUnpack<Fields>());
       
       //generated.hpp
-      built_in_types.emplace("AccountName",             packUnpack<AccountName>());
-      built_in_types.emplace("PermissionName",          packUnpack<PermissionName>());
-      built_in_types.emplace("FuncName",                packUnpack<FuncName>());
-      built_in_types.emplace("MessageName",             packUnpack<MessageName>());
-      //built_in_types.emplace("TypeName",              packUnpack<TypeName>());
-      built_in_types.emplace("AccountPermission",       packUnpack<AccountPermission>());
-      built_in_types.emplace("Message",                 packUnpack<Message>());
-      built_in_types.emplace("AccountPermissionWeight", packUnpack<AccountPermissionWeight>());
-      built_in_types.emplace("Transaction",             packUnpack<Transaction>());
-      built_in_types.emplace("SignedTransaction",       packUnpack<SignedTransaction>());
-      built_in_types.emplace("KeyPermissionWeight",     packUnpack<KeyPermissionWeight>());
-      built_in_types.emplace("Authority",               packUnpack<Authority>());
-      built_in_types.emplace("BlockchainConfiguration", packUnpack<BlockchainConfiguration>());
-      built_in_types.emplace("TypeDef",                 packUnpack<TypeDef>());
-      built_in_types.emplace("Action",                  packUnpack<Action>());
-      built_in_types.emplace("Table",                   packUnpack<Table>());
-      built_in_types.emplace("Abi",                     packUnpack<Abi>());
+      built_in_types.emplace("AccountName",                packUnpack<AccountName>());
+      built_in_types.emplace("PermissionName",             packUnpack<PermissionName>());
+      built_in_types.emplace("FuncName",                   packUnpack<FuncName>());
+      built_in_types.emplace("MessageName",                packUnpack<MessageName>());
+      //built_in_types.emplace("TypeName",                 packUnpack<TypeName>());
+      built_in_types.emplace("AccountPermission",          packUnpack<AccountPermission>());
+      built_in_types.emplace("Message",                    packUnpack<Message>());
+      built_in_types.emplace("AccountPermissionWeight",    packUnpack<AccountPermissionWeight>());
+      built_in_types.emplace("Transaction",                packUnpack<Transaction>());
+      built_in_types.emplace("SignedTransaction",          packUnpack<SignedTransaction>());
+      built_in_types.emplace("KeyPermissionWeight",        packUnpack<KeyPermissionWeight>());
+      // built_in_types.emplace("EthAddressPermissionWeight", packUnpack<EthAddressPermissionWeight>());
+      built_in_types.emplace("Authority",                  packUnpack<Authority>());
+      built_in_types.emplace("BlockchainConfiguration",    packUnpack<BlockchainConfiguration>());
+      built_in_types.emplace("TypeDef",                    packUnpack<TypeDef>());
+      built_in_types.emplace("Action",                     packUnpack<Action>());
+      built_in_types.emplace("Table",                      packUnpack<Table>());
+      built_in_types.emplace("Abi",                        packUnpack<Abi>());
    }
 
    void AbiSerializer::setAbi( const Abi& abi ) {

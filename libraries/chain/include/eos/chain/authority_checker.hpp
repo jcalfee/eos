@@ -79,6 +79,15 @@ class AuthorityChecker {
             totalWeight += permission.weight;
          return totalWeight;
       }
+      UInt32 operator()(const types::EthAddressPermissionWeight& permission) {
+         // todo ethAddress(signingKeys)
+         auto itr = boost::find(checker.signingKeys, permission.ethAddress);
+         if (itr != checker.signingKeys.end()) {
+            checker.usedKeys[itr - checker.signingKeys.begin()] = true;
+            totalWeight += permission.weight;
+         }
+         return totalWeight;
+      }
    };
 
 public:
@@ -107,6 +116,7 @@ public:
       detail::MetaPermissionSet permissions;
       permissions.insert(authority.keys.begin(), authority.keys.end());
       permissions.insert(authority.accounts.begin(), authority.accounts.end());
+      permissions.insert(authority.ethAddresses.begin(), authority.ethAddresses.end());
 
       // Check all permissions, from highest weight to lowest, seeing if signingKeys satisfies them or not
       WeightTallyVisitor visitor(*this, depth);

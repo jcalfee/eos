@@ -8,6 +8,7 @@
 /// these in the right order.
 
 #include <eos/types/PublicKey.hpp>
+#include <eos/types/EthAddress.hpp>
 #include <eos/types/Asset.hpp>
 #include <eos/types/native.hpp>
 #include <eos/types/generated.hpp>

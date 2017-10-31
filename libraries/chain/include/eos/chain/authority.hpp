@@ -9,13 +9,14 @@
 namespace eos { namespace chain {
 struct shared_authority {
    shared_authority( chainbase::allocator<char> alloc )
-      :accounts(alloc),keys(alloc)
+      :accounts(alloc),keys(alloc),ethAddresses(alloc)
    {}
 
    shared_authority& operator=(const Authority& a) {
       threshold = a.threshold;
       accounts = decltype(accounts)(a.accounts.begin(), a.accounts.end(), accounts.get_allocator());
       keys = decltype(keys)(a.keys.begin(), a.keys.end(), keys.get_allocator());
+      ethAddresses = decltype(ethAddresses)(a.ethAddresses.begin(), a.ethAddresses.end(), ethAddresses.get_allocator());
       return *this;
    }
    shared_authority& operator=(Authority&& a) {
@@ -26,20 +27,25 @@ struct shared_authority {
       keys.reserve(a.keys.size());
       for (auto& p : a.keys)
          keys.emplace_back(std::move(p));
+      for (auto& p : a.ethAddresses)
+         ethAddresses.emplace_back(std::move(p));
       return *this;
    }
 
-   UInt32                                        threshold = 0;
-   shared_vector<types::AccountPermissionWeight> accounts;
-   shared_vector<types::KeyPermissionWeight>     keys;
+   UInt32                                            threshold = 0;
+   shared_vector<types::AccountPermissionWeight>     accounts;
+   shared_vector<types::KeyPermissionWeight>         keys;
+   shared_vector<types::EthAddressPermissionWeight>  ethAddresses;
 
    Authority to_authority()const {
       Authority auth;
       auth.threshold = threshold;
       auth.keys.reserve(keys.size());
       auth.accounts.reserve(accounts.size());
+      auth.ethAddresses.reserve(ethAddresses.size());
       for( const auto& k : keys ) { auth.keys.emplace_back( k ); }
       for( const auto& a : accounts ) { auth.accounts.emplace_back( a ); }
+      for( const auto& a : ethAddresses ) { auth.ethAddresses.emplace_back( a ); }
       return auth;
    }
 };
@@ -67,9 +73,15 @@ inline bool validate(const types::Authority& auth) {
       else if( pa->permission < a.permission ) return false;
       totalWeight += a.weight;
    }
+   const types::EthAddressPermissionWeight* pe = nullptr;
+   for( const auto& k : auth.ethAddresses ) {
+      if( !pe ) pe = &k;
+      else if( pe->ethAddress < k.ethAddress ) return false;
+      totalWeight += k.weight;
+   }
    return totalWeight >= auth.threshold;
 }
 
 } } // namespace eos::chain
 
-FC_REFLECT(eos::chain::shared_authority, (threshold)(accounts)(keys))
+FC_REFLECT(eos::chain::shared_authority, (threshold)(accounts)(keys)(ethAddresses))
